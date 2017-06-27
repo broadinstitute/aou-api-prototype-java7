@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<appengine-web-app xmlns="http://appengine.google.com/ns/1.0">
+  <application>allofus-164617</application>
+  <service>api</service>
+  <version>0.1-SNAPSHOT</version>
+  <threadsafe>true</threadsafe>
+</appengine-web-app>

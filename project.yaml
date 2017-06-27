@@ -1,0 +1,6 @@
+namespace: aourpapi
+source_file_paths:
+  - build.gradle
+  - settings.gradle
+  - src/main/java
+  - src/main/webapp
