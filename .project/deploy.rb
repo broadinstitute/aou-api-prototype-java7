@@ -1,7 +1,5 @@
 require_relative "common/common"
 
-$working_dir = "/home/gradle"
-
 def assemble()
   c = Common.new
   if Dir.exist?("target")
@@ -10,10 +8,12 @@ def assemble()
   end
   c.status "Creating compiler container..."
   env = c.load_env
-  cname = "#{env.namespace}-compiler"
+  cname = "#{env.namespace}-deploy-compiler"
   c.run_inline %W{
     docker create --name #{cname}
-      -v gradle-cache:/home/gradle/.gradle
+      --user root
+      -v gradle-cache:/root/.gradle
+      -w /w
       gradle:jdk7-alpine
       gradle --no-daemon assemble
   }
@@ -21,14 +21,14 @@ def assemble()
   env.source_file_paths.each do |src_path|
     c.pipe(
       %W{tar -c #{src_path}},
-      %W{docker cp - #{cname}:#{$working_dir}}
+      %W{docker cp - #{cname}:/w}
     )
   end
   c.status "Compiling..."
   c.run_inline %W{docker start -a #{cname}}
   c.status "Copying artifacts..."
   gradle_target = "build/exploded-allofus-researcher-portal-api"
-  c.run_inline %W{docker cp #{cname}:#{$working_dir}/#{gradle_target} target}
+  c.run_inline %W{docker cp #{cname}:/w/#{gradle_target} target}
 end
 
 def deploy()

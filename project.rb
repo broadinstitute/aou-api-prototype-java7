@@ -6,6 +6,7 @@ unless Dir.exists? ".project/common"
 end
 
 require_relative ".project/common/common"
+require_relative ".project/compile"
 require_relative ".project/deploy"
 
 c = Common.new

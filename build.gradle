@@ -40,3 +40,13 @@ version = '0.1-SNAPSHOT'
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
+
+sourceSets {
+  main {
+    java {
+      srcDir 'src/main/java'
+    }
+    output.classesDir = 'build/WEB-INF/classes'
+  }
+}
+buildDir = 'build/WEB-INF'
